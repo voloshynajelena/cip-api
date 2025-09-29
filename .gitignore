@@ -1,0 +1,9 @@
+node_modules
+dist
+.vercel
+.vscode
+.idea
+.DS_Store
+.env
+dist
+schema.gql
