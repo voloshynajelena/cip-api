@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
-import { MetaData } from "../Common/common.interfaces";
-import { MetaDataSchema } from "../Common/common.schema";
+import { MetaData } from "../common/common.interfaces";
+import { MetaDataSchema } from "../common/common.schema";
 
 export type LogsDocument = HydratedDocument<LogDataClass>;
 

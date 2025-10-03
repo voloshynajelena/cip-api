@@ -1,20 +1,11 @@
-import {
-  Body,
-  Controller,
-  Query,
-  Get,
-  Put,
-  Post,
-  UseGuards,
-} from "@nestjs/common";
+import { Body, Controller, Get, Put, Query, UseGuards } from "@nestjs/common";
 import { CreateUserDto } from "../DTO/create-user.dto";
-import { UsersDataClass } from "../Schemas/users.schema";
-import { UsersService } from "../Services/users.service";
-import { AuthGuard } from "../Services/auth.guard";
+import { UsersDataClass } from "../schemas/users.schema";
+import { UsersService } from "../services/users.service";
+import { AuthGuard } from "../services/auth.guard";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
-
-@ApiTags('User')
+@ApiTags("User")
 @ApiBearerAuth() // Enable Bearer Auth for Swagger UI
 @Controller("user")
 export class UsersController {

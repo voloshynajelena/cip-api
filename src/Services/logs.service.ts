@@ -2,9 +2,8 @@ import { Model } from "mongoose";
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { UsersService } from "./users.service";
-import { CreateLogDto } from "../DTO/create-log.dto";
-import { LogDataClass } from "../Schemas/log.schema";
-import { CustomRequest } from "../Common/common.interfaces";
+import { LogDataClass } from "../schemas/log.schema";
+import { CustomRequest } from "../common/common.interfaces";
 
 const hyperid = require("hyperid");
 const generateId = hyperid({ urlSafe: true });
@@ -35,8 +34,8 @@ export class LogsService {
 
   async findAll(user: { sub: string }): Promise<LogDataClass[]> {
     const currentUser = await this.usersService.findOne(user?.sub);
-    if(!currentUser?.userId) {
-      return[];
+    if (!currentUser?.userId) {
+      return [];
     }
     const Logs = await this.LogsModel.find({
       userId: currentUser?.userId,

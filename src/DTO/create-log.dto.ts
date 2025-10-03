@@ -1,4 +1,4 @@
-import { MetaData } from "../Common/common.interfaces";
+import { MetaData } from "../common/common.interfaces";
 
 export class CreateLogDto {
   readonly id: string;

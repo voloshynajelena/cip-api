@@ -1,10 +1,9 @@
 import { Module } from "@nestjs/common";
-import { ClientsModule } from "./Modules/clients.module";
 import { MongooseModule } from "@nestjs/mongoose";
-import { AuthModule } from "./Modules/auth.module";
-import { UsersModule } from "./Modules/users.module";
+import { AuthModule } from "./modules/auth.module";
+import { UsersModule } from "./modules/users.module";
 import { ConfigModule } from "@nestjs/config";
-// import { BffGraphqlModule } from "./Bff/bff-graphql.module";
+import { BffGraphqlModule } from "./bff/bff-graphql.module";
 
 require("dotenv").config();
 
@@ -14,7 +13,7 @@ require("dotenv").config();
     ConfigModule.forRoot({ isGlobal: true }),
     AuthModule,
     UsersModule,
-    ClientsModule,
+    BffGraphqlModule,
   ],
   providers: [],
 })

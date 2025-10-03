@@ -1,73 +1,166 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# CIP API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Backend for the **CIP** project: NestJS 10, GraphQL (Apollo, code-first), MongoDB (Mongoose), Swagger for REST endpoints.
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Tech Stack
+- **Runtime:** Node.js 20
+- **Framework:** NestJS 10
+- **GraphQL:** `@nestjs/graphql` + `@nestjs/apollo` (code-first, auto schema generation)
+- **Database:** MongoDB Atlas + Mongoose
+- **REST Docs:** Swagger (`/docs`)
+- **Security/Performance:** helmet, compression
+- **Deploy:** Railway (Backend) + Vercel (Frontend)
 
-## Installation
+---
+
+## Getting Started
 
 ```bash
-$ npm install
+# 1) Install dependencies
+npm install
+
+# 2) Copy env file
+cp .env.example .env
+
+# 3) Run in watch mode (development)
+npm run start:dev
+
+# or build & run
+npm run build && npm run start
 ```
 
-## Running the app
+### `.env.example`
+```env
+PORT=3000
+NODE_ENV=development
+
+# Allowed origins (comma separated)
+CORS_ORIGIN=https://cip.vercel.app,http://localhost:3000
+
+# MongoDB Atlas
+MONGODB_URI="mongodb+srv://<user>:<pass>@<cluster>.mongodb.net/cip?retryWrites=true&w=majority&appName=cip"
+
+# Auth
+JWT_SECRET=change_me
+
+# Swagger
+ENABLE_SWAGGER=true
+API_VERSION=1
+```
+
+---
+
+## Run Modes
 
 ```bash
-# development
-$ npm run start
+# Development (watch mode, ts-node)
+npm run start:dev
 
-# watch mode
-$ npm run start:dev
+# Production (compiled dist)
+npm run build
+npm run start
+npm run start:prod
 
-# production mode
-$ npm run start:prod
+# Railway production
+npm run start:railway
 ```
 
-## Test
+---
+
+## Endpoints
+
+- **GraphQL Playground / Apollo Sandbox:** `GET /graphql`
+    - Enabled if `NODE_ENV !== production`
+    - Test query:
+      ```graphql
+      query { ping }
+      ```
+- **REST Healthcheck:** `GET /health` → `{ "status": "ok" }`
+- **Swagger Docs:** `GET /docs`
+    - Enabled with `ENABLE_SWAGGER=true`
+    - REST versioning: `/v1/*`
+
+---
+
+## NPM Scripts
 
 ```bash
-# unit tests
-$ npm run test
+# Code formatting
+npm run format
 
-# e2e tests
-$ npm run test:e2e
+# Linting
+npm run lint
 
-# test coverage
-$ npm run test:cov
+# Tests
+npm run test         # unit
+npm run test:e2e     # e2e
+npm run test:cov     # coverage
 ```
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Project Structure (simplified)
 
-## Stay in touch
+```
+src/
+  app.module.ts
+  main.ts
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+  bff/
+    bff-graphql.module.ts
+    resolvers/
+      ping.resolver.ts      # minimal Query
+
+  health/
+    health.controller.ts    # /health endpoint
+
+  common/                   # interfaces / shared types
+  dto/                      # DTOs
+  schemas/                  # Mongoose schemas
+  services/                 # business logic
+  controllers/              # REST controllers
+```
+
+---
+
+## Deploy on Railway (Production)
+
+1. Connect GitHub repo to Railway → “Deploy from GitHub”.
+2. Add environment variables:
+    - `MONGODB_URI` — Atlas connection string
+    - `CORS_ORIGIN` — e.g. `https://cip.vercel.app`
+    - `JWT_SECRET` — production secret
+    - `NODE_ENV=production`
+    - `ENABLE_SWAGGER=false` (recommended in prod)
+    - `API_VERSION=1`
+3. Configure build & start:
+    - **Build:** `npm run build`
+    - **Start:** `npm run start:railway`
+4. Verify:
+    - `GET /health` → `{ status: "ok" }`
+    - `POST /graphql` (Playground disabled in prod)
+
+---
+
+## Common Issues
+
+- **MongoDB: “Unable to connect to the database”**
+    - Check `MONGODB_URI` (correct user/password, URL-encode special chars).
+    - In Atlas → *Network Access* → allow `0.0.0.0/0` or proper IPs.
+    - Update Mongoose if needed:
+      ```bash
+      npm i mongoose@^8 @nestjs/mongoose@^10
+      ```
+
+- **GraphQL: `Query root type must be provided.`**
+    - At least one `@Query` resolver is required (see `ping.resolver.ts`).
+
+- **CORS issues**
+    - Add your frontend domains in `CORS_ORIGIN` (comma separated).
+
+---
 
 ## License
-
-  Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+MIT

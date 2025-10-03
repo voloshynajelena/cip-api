@@ -1,7 +1,7 @@
 import { Model } from "mongoose";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { AuthDataClass } from "../Schemas/auth.schema";
+import { AuthDataClass } from "../schemas/auth.schema";
 import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
