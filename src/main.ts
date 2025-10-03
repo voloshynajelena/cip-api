@@ -22,11 +22,6 @@ async function bootstrap() {
 
   app.use(compression());
 
-  app.enableCors({
-    origin: (process.env.CORS_ORIGIN ?? "*").split(","),
-    credentials: true,
-  });
-
   app.enableVersioning({
     type: VersioningType.URI,
     defaultVersion: process.env.API_VERSION || "1",

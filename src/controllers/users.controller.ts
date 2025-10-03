@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Put, Query, UseGuards } from "@nestjs/common";
-import { CreateUserDto } from "../DTO/create-user.dto";
+import { CreateUserDto } from "../dto/create-user.dto";
 import { UsersDataClass } from "../schemas/users.schema";
 import { UsersService } from "../services/users.service";
 import { AuthGuard } from "../services/auth.guard";
